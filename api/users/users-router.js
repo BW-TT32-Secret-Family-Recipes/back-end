@@ -1,6 +1,7 @@
 const express = require("express");
 const Users = require("./users-model");
 const router = express.Router();
+const { validateUserId } = require("../middleware")
 
 router.get("/", async (req, res) => {
     try {
@@ -20,6 +21,15 @@ router.get("/:id", async (req, res) => {
     }
     catch (error) {
         res.status(404).json({ message: error.message });
+    }
+});
+
+router.get("/:id/recipes", validateUserId, async (req, res) => {
+    try {
+        console.log("hello there")
+    }
+    catch (error) {
+
     }
 });
 
