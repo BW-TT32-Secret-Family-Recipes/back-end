@@ -9,5 +9,8 @@ module.exports = {
                 await db("users").where("id", id).first();
             })
             .catch(err => { console.log(err) });
+    },
+    getById(id) {
+        return db("users").where("id", id).first();
     }
 };
