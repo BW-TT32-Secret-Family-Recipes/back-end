@@ -12,5 +12,11 @@ module.exports = {
     },
     getById(id) {
         return db("users").where("id", id).first();
+    },
+    getUserRecipes(id) {
+        return db("users")
+            .join("recipes", "users.id", "recipes.user_id")
+            .select("*").where("user_id", id).first()
+            .catch(err => { console.log(err) })
     }
 };

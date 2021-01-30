@@ -26,10 +26,12 @@ router.get("/:id", async (req, res) => {
 
 router.get("/:id/recipes", validateUserId, async (req, res) => {
     try {
-        console.log("hello there")
+        const { id } = req.params;
+        const recipes = await Users.getUserRecipes(id);
+        res.status(200).json(recipes);
     }
     catch (error) {
-
+        res.status(500).json({ message: error.message });
     }
 });
 
