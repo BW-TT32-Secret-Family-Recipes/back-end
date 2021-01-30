@@ -1,6 +1,6 @@
 
 exports.seed = function (knex) {
-  return knex("sources").truncate()
+  return knex("sources").del()
     .then(function () {
       return knex("sources").insert([
         { source_name: "Granny" },

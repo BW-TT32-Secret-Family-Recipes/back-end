@@ -31,7 +31,7 @@ exports.up = function (knex) {
             .inTable("ingredients")
             .onDelete("CASCADE")
             .onUpdate("CASCADE")
-        tbl.string("instructions", 128).notNullable()
+        tbl.string("instructions", 1000).notNullable()
     });
 };
 

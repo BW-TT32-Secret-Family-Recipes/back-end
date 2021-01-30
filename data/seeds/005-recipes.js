@@ -1,6 +1,6 @@
 
 exports.seed = function (knex) {
-  return knex("recipes").truncate()
+  return knex("recipes").del()
     .then(function () {
       return knex("recipes").insert([
         { title: "Pizza", user_id: 1, category_id: 1, source_id: 1, ingredients_id: 1, instructions: "1. Preheat the oven to 400 degrees F, 2. Roll dough to desired shape, 3. Ladle sauce onto dough, 4. Add Cheese, 5. Bake 15 minutes " },
