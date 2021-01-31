@@ -36,15 +36,4 @@ router.get("/:id", validateUserId, validateRecipeId, async (req, res) => {
     }
 })
 
-router.post("/search", async (req, res) => {
-    try {
-        const searchTerm = req.body
-        console.log(searchTerm, "SEARCH")
-        const search = await Recipes.search(searchTerm);
-        console.log(search, "TERM")
-    } catch (error) {
-        console.log(error)
-    }
-});
-
 module.exports = router;

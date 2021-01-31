@@ -2,7 +2,7 @@ const db = require("../../data/db-config");
 
 module.exports = {
     getAll() {
-        return db("users")
+        return db("users").select("id", "username")
     },
     async insert(user) {
         try {
