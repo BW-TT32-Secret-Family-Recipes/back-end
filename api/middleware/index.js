@@ -22,10 +22,10 @@ const validateReqBody = async (req, res, next) => {
         if (validRequest.username && validRequest.password) {
             next();
         } else if (!validRequest.username || !validRequest.password) {
-            res.status(400).json({ message: "Both username and password required to register." })
+            res.status(400).json({ errorMessage: "Both username and password required." })
         }
     } catch (error) {
-        res.status(500).json({ message: "Error with your registration, try again." })
+        res.status(500).json({ errorMessage: "Error with your registration, try again." })
     }
 };
 

@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
         res.status(200).json(users);
     }
     catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(404).json({ errorMessage: error.message });
     }
 });
 
@@ -22,7 +22,7 @@ router.get("/:id", async (req, res) => {
         res.status(200).json(user);
     }
     catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(404).json({ errorMessage: error.message });
     }
 });
 
@@ -46,7 +46,7 @@ router.post("/:id/recipes", validateUserId, async (req, res) => {
         res.status(201).json(RecipeResponseObject.rows[0]);
     }
     catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(404).json({ errorMessage: error.message });
     }
 });
 

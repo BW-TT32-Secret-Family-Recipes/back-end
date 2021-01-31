@@ -18,12 +18,12 @@ router.post("/register", validateReqBody, async (req, res) => {
         }
     }
     catch (error) {
-        console.log("ERRROR:", error)
+        res.status(500).json({ errorMessage: "Unable to connect to server, try again." })
     }
 
 });
 
-router.post("/login", (req, res) => {
+router.post("/login", validateReqBody, (req, res) => {
     const { username, password } = req.body;
     Users.getBy(username)
         .then(user => {
@@ -35,7 +35,7 @@ router.post("/login", (req, res) => {
                 res.status(404).json({ message: "Error logging in" })
             }
         })
-        .catch(err => res.status(500).json(err));
+        .catch(err => { res.status(500).json({ errorMessage: "Unable to login, try again." }) });
 });
 
 module.exports = router;

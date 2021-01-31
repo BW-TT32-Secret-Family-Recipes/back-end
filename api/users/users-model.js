@@ -1,4 +1,5 @@
 const db = require("../../data/db-config");
+
 module.exports = {
     getAll() {
         return db("users")
@@ -39,5 +40,4 @@ module.exports = {
         console.log(newRecipe[0])
         return newRecipe[0]
     }
-
 };
