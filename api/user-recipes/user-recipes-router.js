@@ -26,4 +26,13 @@ router.put("/:id", async (req, res) => {
 
 })
 
+router.get("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const recipe = await Recipes.getById(id)
+        res.status(200).json(recipe.rows[0]);
+    } catch (error) {
+        res.status(500).json({ errorMessage: "Unable to retrieve recipe." })
+    }
+})
 module.exports = router;
