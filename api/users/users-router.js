@@ -1,5 +1,6 @@
 const express = require("express");
 const Users = require("./users-model");
+const Recipes = require('../recipes/recipes-model')
 const router = express.Router();
 const { validateUserId } = require("../middleware")
 
@@ -28,12 +29,26 @@ router.get("/:id/recipes", validateUserId, async (req, res) => {
     try {
         const { id } = req.params;
         const recipes = await Users.getUserRecipes(id);
-        res.status(200).json(recipes);
+        res.status(200).json(recipes.rows);
     }
     catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
+
+router.post("/:id/recipes", validateUserId, async (req, res) => {
+    try {
+        const addedRecipe = req.body;
+        const { id } = req.params;
+        const newRecipe = await Users.createUserRecipe(addedRecipe, id)
+        const RecipeResponseObject = await Recipes.getById(newRecipe.id)
+        res.status(201).json(RecipeResponseObject.rows[0]);
+    }
+    catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+});
+
 
 
 module.exports = router;
