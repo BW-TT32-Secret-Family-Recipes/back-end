@@ -2,10 +2,10 @@ const bcrypt = require("bcrypt");
 const express = require("express");
 const router = express.Router();
 const Users = require("../users/users-model");
-// const {validUserBody} = require(path to middleware)
-//const {generateToken} = require(token function path)
+const { validateRegistrationBody } = require("../middleware");
+const { generateToken } = require("../../token");
 
-router.post("/register", async (req, res) => {
+router.post("/register", validateRegistrationBody, async (req, res) => {
     const user = req.body;
     const hashed = bcrypt.hashSync(user.password, 12);
     try {
@@ -28,14 +28,14 @@ router.post("/login", (req, res) => {
     Users.getBy(username)
         .then(user => {
             if (user && bcrypt.compareSync(password, user.password)) {
-                console.log("hello  there", user);
-                res.status(200).json(`Welcome ${username}`);
+                const token = generateToken(user)
+                res.status(200).json({ message: `Welcome ${username}`, token });
             } else {
                 console.log("there is no user,try again");
                 res.status(404).json({ message: "Error logging in" })
             }
         })
-        .catch(err => console.log(err, "WRONG WRONG HELP"));
+        .catch(err => res.status(500).json(err));
 });
 
 module.exports = router;
