@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Recipes = require("./recipes-model");
 const Users = require("../users/users-model");
-const { validateUserId } = require("../middleware");
+const { validateUserId, validateRecipeId } = require("../middleware");
 
 router.get("/", async (req, res) => {
     try {
@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", validateRecipeId, async (req, res) => {
     try {
         const { id } = req.params;
         const recipe = await Recipes.getById(id);

@@ -1,4 +1,5 @@
 const Users = require("../users/users-model");
+const Recipes = require("../recipes/recipes-model");
 
 const validateUserId = async (req, res, next) => {
     const { id } = req.params;
@@ -29,7 +30,22 @@ const validateReqBody = async (req, res, next) => {
     }
 };
 
+const validateRecipeId = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const validRecipe = await Recipes.getById(id);
+        if (validRecipe.rows.length) {
+            next();
+        } else {
+            res.status(401).json({ errorMessage: `Recipe with id ${id} does not exist.` })
+        }
+    } catch (error) {
+        res.status(500).json({ errorMessage: "Unable to get recipe" })
+    }
+}
+
 module.exports = {
     validateUserId,
-    validateReqBody
+    validateReqBody,
+    validateRecipeId
 };
