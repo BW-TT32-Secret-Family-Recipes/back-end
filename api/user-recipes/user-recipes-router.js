@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Recipes = require("../recipes/recipes-model");
-const { validateRecipeId } = require("../middleware/index")
+const { validateRecipeId, validateUserId } = require("../middleware/index")
 
-router.delete("/:id", validateRecipeId, async (req, res) => {
+router.delete("/:id", validateUserId, validateRecipeId, async (req, res) => {
     const { id } = req.params
     try {
         const deletedRecipe = await Recipes.remove(id);
@@ -14,7 +14,7 @@ router.delete("/:id", validateRecipeId, async (req, res) => {
     }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", validateUserId, validateRecipeId, async (req, res) => {
     const editRecipe = req.body;
     const { id } = req.params;
     try {
@@ -26,7 +26,7 @@ router.put("/:id", async (req, res) => {
 
 })
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", validateUserId, validateRecipeId, async (req, res) => {
     try {
         const { id } = req.params;
         const recipe = await Recipes.getById(id)
@@ -35,5 +35,16 @@ router.get("/:id", async (req, res) => {
         res.status(500).json({ errorMessage: "Unable to retrieve recipe." })
     }
 })
+
+router.post("/search", async (req, res) => {
+    try {
+        const searchTerm = req.body
+        console.log(searchTerm, "SEARCH")
+        const search = await Recipes.search(searchTerm);
+        console.log(search, "TERM")
+    } catch (error) {
+        console.log(error)
+    }
+});
 
 module.exports = router;
