@@ -3,6 +3,7 @@ const Users = require("./users-model");
 const Recipes = require('../recipes/recipes-model')
 const router = express.Router();
 const { validateUserId } = require("../middleware")
+const security = require("../auth/middleware/restricted-middleware");
 
 router.get("/", async (req, res) => {
     try {
@@ -10,7 +11,7 @@ router.get("/", async (req, res) => {
         res.status(200).json(users);
     }
     catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(404).json({ errorMessage: error.message });
     }
 });
 
@@ -21,11 +22,11 @@ router.get("/:id", async (req, res) => {
         res.status(200).json(user);
     }
     catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(404).json({ errorMessage: error.message });
     }
 });
 
-router.get("/:id/recipes", validateUserId, async (req, res) => {
+router.get("/:id/recipes", security, validateUserId, async (req, res) => {
     try {
         const { id } = req.params;
         const recipes = await Users.getUserRecipes(id);
@@ -45,7 +46,7 @@ router.post("/:id/recipes", validateUserId, async (req, res) => {
         res.status(201).json(RecipeResponseObject.rows[0]);
     }
     catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(404).json({ errorMessage: error.message });
     }
 });
 
