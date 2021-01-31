@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Recipes = require("./recipes-model");
 const Users = require("../users/users-model");
-const { validateUserId } = require("../middleware");
+const { validateUserId, validateRecipeId } = require("../middleware");
 
 router.get("/", async (req, res) => {
     try {
@@ -14,17 +14,14 @@ router.get("/", async (req, res) => {
     }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", validateRecipeId, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const recipe = await Recipes.getById(id);
+        res.status(200).json(recipe.rows[0])
+    } catch (error) {
 
+    }
 });
-
-router.put("/:id", async (req, res) => {
-
-});
-
-router.delete("/:id", async (req, res) => {
-
-});
-
 
 module.exports = router;
