@@ -1,4 +1,4 @@
-const Users = require("../users/users-model")
+const Users = require("../users/users-model");
 
 const validateUserId = async (req, res, next) => {
     const { id } = req.params;
