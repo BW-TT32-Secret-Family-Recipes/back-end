@@ -7,6 +7,9 @@ module.exports = {
     async insert(user) {
         try {
             const response = await db("users").insert(user).returning("*")
+
+            //NEED TO FIX THIS TO NOT RETURN PASSWORD!!!!!!!!! ********************************************
+
             return response;
         } catch (error) {
             return (`Username already exists, please try again.`);
