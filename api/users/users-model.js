@@ -21,7 +21,7 @@ module.exports = {
     getBy(filter) {
         return db("users").where("username", filter).first();
     },
-    getUserRecipes(id) {
+    async getUserRecipes(id) {
         return db.raw(`
         select r.id, u.username, r.title, c.category_name, i.ingredients, r.instructions 
             from recipes as r
