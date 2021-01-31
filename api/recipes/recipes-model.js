@@ -22,7 +22,6 @@ module.exports = {
     },
     async update(recipe, recipeId) {
         const editRecipe = await db("recipes").where("id", recipeId).returning("*")
-        console.log(editRecipe)
 
         const catId = await db("categories").where("id", editRecipe[0].category_id).update({ category_name: recipe.category })
 

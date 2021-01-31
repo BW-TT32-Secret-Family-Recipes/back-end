@@ -7,10 +7,8 @@ module.exports = {
     async insert(user) {
         try {
             const response = await db("users").insert(user).returning("*")
+            return ({ id: response[0].id, username: response[0].username })
 
-            //NEED TO FIX THIS TO NOT RETURN PASSWORD!!!!!!!!! ********************************************
-
-            return response;
         } catch (error) {
             return (`Username already exists, please try again.`);
         }
@@ -40,7 +38,6 @@ module.exports = {
         const ingId = await db("ingredients").insert({ ingredients: ingredients }).returning("id")
         const insertRecipeObject = { title, user_id: userId, category_id: catId[0], source_id: sourceId[0], instructions, ingredients_id: ingId[0] };
         const newRecipe = await db("recipes").insert({ ...insertRecipeObject }).returning("*")
-        console.log(newRecipe[0])
         return newRecipe[0]
     }
 };
