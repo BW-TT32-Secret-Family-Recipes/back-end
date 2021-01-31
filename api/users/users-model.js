@@ -4,14 +4,20 @@ module.exports = {
         return db("users")
     },
     async insert(user) {
-        await db("users").insert(user)
-            .then(async id => {
-                await db("users").where("id", id).first();
-            })
-            .catch(err => { console.log(err) });
+        try {
+            const response = await db("users").insert(user).returning("*")
+            console.log({ response })
+            return response;
+        } catch (error) {
+            console.log({ error })
+            return {}
+        }
     },
     getById(id) {
         return db("users").where("id", id).first();
+    },
+    getBy(filter) {
+        return db("users").where("username", filter).first();
     },
     getUserRecipes(id) {
         return db.raw(`
@@ -27,11 +33,11 @@ module.exports = {
     },
     async createUserRecipe(recipe, userId) {
         const { title, source, category, ingredients, instructions } = recipe;
-        const sourceId = await db("sources").insert({ source_name: source }).returning('id')
-        const catId = await db("categories").insert({ category_name: category }).returning('id')
-        const ingId = await db("ingredients").insert({ ingredients: ingredients }).returning('id')
+        const sourceId = await db("sources").insert({ source_name: source }).returning("id")
+        const catId = await db("categories").insert({ category_name: category }).returning("id")
+        const ingId = await db("ingredients").insert({ ingredients: ingredients }).returning("id")
         const insertRecipeObject = { title, user_id: userId, category_id: catId[0], source_id: sourceId[0], instructions, ingredients_id: ingId[0] };
-        const newRecipe = await db("recipes").insert({ ...insertRecipeObject }).returning('*')
+        const newRecipe = await db("recipes").insert({ ...insertRecipeObject }).returning("*")
         console.log(newRecipe[0])
         return newRecipe[0]
     }

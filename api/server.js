@@ -2,10 +2,12 @@ const express = require("express");
 const server = express();
 const recipesRouter = require("./recipes/recipes-router");
 const usersRouter = require("./users/users-router");
+const authRouter = require("../api/auth/auth-router");
 
 server.use(express.json());
+
+server.use("/api/auth", authRouter);
 server.use("/api/recipes", recipesRouter);
-server.use("/api/users", usersRouter)
+server.use("/api/users", usersRouter);
 
 module.exports = server;
-
