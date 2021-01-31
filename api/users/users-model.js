@@ -6,11 +6,9 @@ module.exports = {
     async insert(user) {
         try {
             const response = await db("users").insert(user).returning("*")
-            console.log({ response })
             return response;
         } catch (error) {
-            console.log({ error })
-            return {}
+            return (`Username already exists, please try again.`);
         }
     },
     getById(id) {

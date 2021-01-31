@@ -2,10 +2,10 @@ const bcrypt = require("bcrypt");
 const express = require("express");
 const router = express.Router();
 const Users = require("../users/users-model");
-const { validateRegistrationBody } = require("../middleware");
+const { validateReqBody } = require("../middleware");
 const { generateToken } = require("../../token");
 
-router.post("/register", validateRegistrationBody, async (req, res) => {
+router.post("/register", validateReqBody, async (req, res) => {
     const user = req.body;
     const hashed = bcrypt.hashSync(user.password, 12);
     try {
@@ -18,7 +18,7 @@ router.post("/register", validateRegistrationBody, async (req, res) => {
         }
     }
     catch (error) {
-        res.status(500).json(error);
+        console.log("ERRROR:", error)
     }
 
 });

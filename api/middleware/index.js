@@ -16,12 +16,12 @@ const validateUserId = async (req, res, next) => {
 
 };
 
-const validateRegistrationBody = async (req, res, next) => {
-    const validRegistration = req.body;
+const validateReqBody = async (req, res, next) => {
+    const validRequest = req.body;
     try {
-        if (validRegistration.username && validRegistration.password) {
+        if (validRequest.username && validRequest.password) {
             next();
-        } else if (!validRegistration.username || !validRegistration.password) {
+        } else if (!validRequest.username || !validRequest.password) {
             res.status(400).json({ message: "Both username and password required to register." })
         }
     } catch (error) {
@@ -31,5 +31,5 @@ const validateRegistrationBody = async (req, res, next) => {
 
 module.exports = {
     validateUserId,
-    validateRegistrationBody
+    validateReqBody
 };
