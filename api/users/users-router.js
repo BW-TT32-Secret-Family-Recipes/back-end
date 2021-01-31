@@ -50,15 +50,4 @@ router.post("/:id/recipes", validateUserId, async (req, res) => {
     }
 });
 
-router.delete("/:id/recipes/:id", validateUserId, async (req, res) => {
-    // try {
-    //     const { id } = req.params
-    //     const deleteRecipe = await Users.delete()
-    // }
-    // catch (error) {
-
-    // }
-});
-
-
 module.exports = router;

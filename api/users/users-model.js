@@ -7,7 +7,8 @@ module.exports = {
     async insert(user) {
         try {
             const response = await db("users").insert(user).returning("*")
-            return response;
+            return ({ id: response[0].id, username: response[0].username })
+
         } catch (error) {
             return (`Username already exists, please try again.`);
         }
@@ -18,7 +19,7 @@ module.exports = {
     getBy(filter) {
         return db("users").where("username", filter).first();
     },
-    getUserRecipes(id) {
+    async getUserRecipes(id) {
         return db.raw(`
         select r.id, u.username, r.title, c.category_name, i.ingredients, r.instructions 
             from recipes as r
@@ -37,7 +38,6 @@ module.exports = {
         const ingId = await db("ingredients").insert({ ingredients: ingredients }).returning("id")
         const insertRecipeObject = { title, user_id: userId, category_id: catId[0], source_id: sourceId[0], instructions, ingredients_id: ingId[0] };
         const newRecipe = await db("recipes").insert({ ...insertRecipeObject }).returning("*")
-        console.log(newRecipe[0])
         return newRecipe[0]
     }
 };
