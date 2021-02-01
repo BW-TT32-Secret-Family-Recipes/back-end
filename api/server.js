@@ -1,5 +1,6 @@
 const express = require("express");
 const server = express();
+const cors = require("cors");
 const recipesRouter = require("./recipes/recipes-router");
 const usersRouter = require("./users/users-router");
 const authRouter = require("../api/auth/auth-router");
