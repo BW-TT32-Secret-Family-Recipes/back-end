@@ -3,9 +3,14 @@ const router = express.Router();
 const Recipes = require("../recipes/recipes-model");
 const { validateRecipeId, validateUserId } = require("../middleware/index")
 
-router.delete("/:id", validateUserId, validateRecipeId, async (req, res) => {
-    const { id } = req.params
+router.delete("/:id", validateRecipeId, async (req, res) => {
+    // console.log(req, "REQ")
+    // const userId = req.baseUrl.split("/")
+    // req.userId = Number(userId[3])
+    // validateUserId(req.userId);
+    // // console.log("userId", req.userId)
     try {
+        const { id } = req.params
         const deletedRecipe = await Recipes.remove(id);
         res.status(200).json({ message: `Recipe with id ${id} has been deleted.` })
     }
@@ -14,7 +19,7 @@ router.delete("/:id", validateUserId, validateRecipeId, async (req, res) => {
     }
 });
 
-router.put("/:id", validateUserId, validateRecipeId, async (req, res) => {
+router.put("/:id", validateRecipeId, async (req, res) => {
     const editRecipe = req.body;
     const { id } = req.params;
     try {
@@ -26,7 +31,7 @@ router.put("/:id", validateUserId, validateRecipeId, async (req, res) => {
 
 })
 
-router.get("/:id", validateUserId, validateRecipeId, async (req, res) => {
+router.get("/:id", validateRecipeId, async (req, res) => {
     try {
         const { id } = req.params;
         const recipe = await Recipes.getById(id)
