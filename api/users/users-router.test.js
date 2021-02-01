@@ -25,9 +25,15 @@ afterAll(async (done) => {
 describe("users router", () => {
     it("gets all users", async () => {
         let res;
-        const newUser = await db("users").insert(olaf)
+        await db("users").insert(olaf)
         res = await request(server).get("/api/users")
         expect(res.body).toHaveLength(1);
+    });
+    it("gets user by id", async () => {
+        let res;
+        await db("users").insert(olaf);
+        res = await request(server).get("/api/users/1")
+        expect(res.body).toMatchObject({ id: 1, ...olaf })
     });
 });
 
