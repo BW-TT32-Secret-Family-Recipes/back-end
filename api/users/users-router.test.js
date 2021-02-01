@@ -1,6 +1,5 @@
 const request = require("supertest");
 const db = require("../../data/db-config");
-// const server = require("../users/users-router");
 const server = require("../server");
 
 const olaf = { username: "Olaf", password: "summer" };
@@ -26,8 +25,9 @@ afterAll(async (done) => {
 describe("users router", () => {
     it("gets all users", async () => {
         let res;
+        const newUser = await db("users").insert(olaf)
         res = await request(server).get("/api/users")
-        console.log("RES!", res.body)
+        expect(res.body).toHaveLength(1);
     });
 });
 
