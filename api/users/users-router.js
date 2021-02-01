@@ -42,8 +42,10 @@ router.post("/:id/recipes", validateUserId, async (req, res) => {
         const addedRecipe = req.body;
         const { id } = req.params;
         const newRecipe = await Users.createUserRecipe(addedRecipe, id)
-        const RecipeResponseObject = await Recipes.getById(newRecipe.id)
-        res.status(201).json(RecipeResponseObject.rows[0]);
+        // console.log({ addedRecipe, newRecipe, id })
+        const RecipeResponseObject = await Recipes.getById(newRecipe)
+        // console.log({ RecipeResponseObject })
+        res.status(201).json(RecipeResponseObject[0]);
     }
     catch (error) {
         res.status(404).json({ errorMessage: error.message });
