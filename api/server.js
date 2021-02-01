@@ -6,7 +6,6 @@ const authRouter = require("../api/auth/auth-router");
 const userRecipesRouter = require("./user-recipes/user-recipes-router");
 
 server.use(express.json());
-server.user(cors());
 
 server.use("/api/auth", authRouter);
 server.use("/api/recipes", recipesRouter);
