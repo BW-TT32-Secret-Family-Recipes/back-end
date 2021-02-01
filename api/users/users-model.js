@@ -21,10 +21,12 @@ module.exports = {
     },
     async getUserRecipes(id) {
         return db.raw(`
-        select r.id, u.username, r.title, c.category_name, i.ingredients, r.instructions 
+        select r.id, u.username,  r.title, s.source_name, c.category_name, i.ingredients, r.instructions 
             from recipes as r
         join users as u 
             on r.user_id = u.id
+        join sources as s
+            on r.source_id = s.id
         join categories as c
             on r.category_id = c.id
         join ingredients as i
