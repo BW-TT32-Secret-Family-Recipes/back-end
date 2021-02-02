@@ -57,7 +57,13 @@ describe("users model", () => {
         res = await Users.getUserRecipes(1)
         expect(res).toHaveLength(1);
     });
-
+    it("can get user's recipes by user id", async () => {
+        let res;
+        await db("users").insert(andrew);
+        await Users.createUserRecipe(newRecipe, 1);
+        res = await Users.getUserRecipes(1);
+        expect(res).toHaveLength(1)
+    });
 
 });
 
