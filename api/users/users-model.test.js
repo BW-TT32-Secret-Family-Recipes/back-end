@@ -64,7 +64,6 @@ describe("users model", () => {
         res = await Users.getUserRecipes(1);
         expect(res).toHaveLength(1)
     });
-
 });
 
 
