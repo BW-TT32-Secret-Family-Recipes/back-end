@@ -23,9 +23,11 @@ module.exports = {
     ...sharedConfig,
     pool: { min: 2, max: 10 }
   },
-  testing: {
+
+  test: {
     client: "sqlite3",
     useNullAsDefault: true,
+    pool: { afterCreate: (conn, done) => conn.run('PRAGMA foreign_keys = ON', done) },
     migrations: { directory: "./data/migrations" },
     seeds: { directory: "./data/seeds" },
     connection: {
