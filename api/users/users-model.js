@@ -14,7 +14,9 @@ module.exports = {
         }
     },
     getById(id) {
-        return db("users").where("id", id).first();
+        return db("users").where("id", id).first().then(user => {
+            return db("users").select("id", "username").first()
+        })
     },
     getBy(filter) {
         return db("users").where("username", filter).first();

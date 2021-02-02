@@ -41,7 +41,7 @@ describe("users router", () => {
         let res;
         await db("users").insert(olaf);
         res = await request(server).get("/api/users/1");
-        expect(res.body).toMatchObject({ id: 1, ...olaf });
+        expect(res.body).toMatchObject({ id: 1, username: "Olaf" });
     });
     it("can post a recipe", async () => {
         let res;
