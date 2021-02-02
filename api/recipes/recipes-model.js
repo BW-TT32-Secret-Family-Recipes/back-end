@@ -37,11 +37,11 @@ module.exports = {
             .select("r.id", "r. title", "c.category_name", "s.source_name", "i.ingredients", "r.instructions")
             .where("r.id", recipeId).first()
         return recipes
-
-
     }
 };
 
+
+//back-up query for update() if all things BREAK!
 // const r = await db.raw(`
 //     select r.id, u.username, r.title, c.category_name,  s.source_name, i.ingredients, r.instructions 
 //         from recipes as r
