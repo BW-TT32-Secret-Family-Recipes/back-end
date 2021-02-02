@@ -34,8 +34,14 @@ describe("recipes router", () => {
     it("cannot get all recipes if not logged in", async () => {
         let res;
         await db("users").insert(olaf)
-        await request(server).post("/api/users/1/recipes").send(recipe)
+        await request(server).post("/api/users/1/recipes").send(recipe);
         res = await request(server).get("/api/users/1/recipes")
         expect(res.status).toBe(500)
+    });
+    it("can post a recipe", async () => {
+        let res;
+        await db("users").insert(olaf)
+        res = await request(server).post("/api/users/1/recipes").send(recipe)
+        expect(res.status).toBe(201);
     });
 });
