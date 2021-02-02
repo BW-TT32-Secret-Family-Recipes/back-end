@@ -44,8 +44,29 @@ describe("recipes-model", () => {
         let res;
         await db("users").insert(andrew);
         await Users.createUserRecipe(newRecipe, 1);
-        res = await Users.createUserRecipe(newRecipe2, 1);
+        await Users.createUserRecipe(newRecipe2, 1);
+        res = await Recipes.getAll();
         expect(res).toHaveLength(2);
+    });
+    it("can get a recipe by id", async () => {
+        let res;
+        let recipeResponse = {
+            username: 'andrew',
+            title: 'yum food',
+            source_name: 'gpa',
+            category_name: 'snacks',
+            ingredients: 'yay',
+            instructions: 'cook'
+        }
+        await db("users").insert(andrew);
+        a = await Users.createUserRecipe(newRecipe, 1);
+        console.log(a, "*A*A*A*A*A")
+        r = await Users.createUserRecipe(newRecipe2, 1);
+        console.log(r, "R*R*R*R")
+        res = await Recipes.getById(4)
+        expect(res[0]).toMatchObject({
+            id: 4, ...recipeResponse
+        })
     });
 });
 
