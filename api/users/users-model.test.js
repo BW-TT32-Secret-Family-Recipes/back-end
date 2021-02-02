@@ -7,6 +7,13 @@ const Users = require("./users-model");
 const db = require("../../data/db-config");
 
 const andrew = { username: "andrew", password: "1234" };
+const newRecipe = {
+    title: "testing",
+    category: "dinner",
+    source: "mom",
+    ingredients: "love",
+    instructions: "cook"
+};
 
 beforeAll(async () => {
     await db.migrate.rollback();
@@ -23,7 +30,13 @@ afterAll(async (done) => {
 });
 
 describe("users model", () => {
-    it("inserts a user", async () => {
+    it("can get all users", async () => {
+        let res;
+        await db("users").insert(andrew);
+        res = await Users.getAll();
+        expect(res).toHaveLength(1);
+    });
+    it("can create a user", async () => {
         let user;
         await Users.insert(andrew);
         user = await db("users");
@@ -36,6 +49,16 @@ describe("users model", () => {
         idU = await Users.getById(user[0].id)
         expect(idU).toMatchObject({ id: 1, username: "andrew" })
     });
+    it("can create a user recipe", async () => {
+        let recipe;
+        let res;
+        let user = await db("users").insert(andrew);
+        recipe = await Users.createUserRecipe(newRecipe, 1);
+        res = await Users.getUserRecipes(1)
+        expect(res).toHaveLength(1);
+    });
+
+
 });
 
 
