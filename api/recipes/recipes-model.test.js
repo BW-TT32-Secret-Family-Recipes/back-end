@@ -3,6 +3,7 @@ const Users = require("../users/users-model");
 const db = require("../../data/db-config");
 
 const andrew = { username: "andrew", password: "1234" };
+const christina = { username: "christina", password: "1234" };
 const newRecipe = {
     title: "testing",
     category: "dinner",
@@ -60,13 +61,20 @@ describe("recipes-model", () => {
         }
         await db("users").insert(andrew);
         a = await Users.createUserRecipe(newRecipe, 1);
-        console.log(a, "*A*A*A*A*A")
         r = await Users.createUserRecipe(newRecipe2, 1);
-        console.log(r, "R*R*R*R")
         res = await Recipes.getById(4)
         expect(res[0]).toMatchObject({
             id: 4, ...recipeResponse
         })
+    });
+    it("can delete a recipe by id", async () => {
+        await db("users").insert(andrew);
+        await db("users").insert(christina);
+        await Users.createUserRecipe(newRecipe, 2);
+        await Users.createUserRecipe(newRecipe2, 2);
+        r = await Recipes.remove(6);
+        del = await Users.getUserRecipes(2)
+        expect(del).toHaveLength(1)
     });
 });
 
