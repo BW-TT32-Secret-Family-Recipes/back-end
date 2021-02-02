@@ -44,7 +44,7 @@ describe("recipes router", () => {
         res = await request(server).post("/api/users/1/recipes").send(recipe)
         expect(res.status).toBe(201);
     });
-    it("can get recipe by id", async () => {
+    it("can get recipe by user id", async () => {
         let res;
         let login;
         await request(server).post("/api/auth/register").send(olaf);
@@ -52,5 +52,14 @@ describe("recipes router", () => {
         await request(server).post("/api/users/1/recipes").send(recipe);
         res = await request(server).get("/api/users/1/recipes").set("authorization", login.body.token);
         expect(res.status).toBe(200)
+    });
+    it("can get recipe by recipe id", async () => {
+        let res;
+        let login;
+        let recipe;
+        await request(server).post("/api/auth/register").send(olaf);
+        login = await request(server).post("/api/auth/login").send(olaf);
+        recipe = await request(server).post("/api/users/1/recipes").send(recipe);
+        res = await request(server).get("/api/users/1/recipes/1").set("authorization", login.body.token);
     });
 });
