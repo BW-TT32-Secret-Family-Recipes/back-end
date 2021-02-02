@@ -22,5 +22,20 @@ afterAll(async (done) => {
     done();
 });
 
+describe("users model", () => {
+    it("inserts a user", async () => {
+        let user;
+        await Users.insert(andrew);
+        user = await db("users");
+        expect(user).toHaveLength(1);
+    });
+    it("can get user by id", async () => {
+        let userById;
+        await db("users").insert(andrew);
+        user = await Users.getAll();
+        idU = await Users.getById(user[0].id)
+        expect(idU).toMatchObject({ id: 1, username: "andrew" })
+    });
+});
 
 
