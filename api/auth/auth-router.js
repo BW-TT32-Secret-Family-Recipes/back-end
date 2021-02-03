@@ -18,7 +18,7 @@ router.post("/register", validateReqBody, async (req, res) => {
         }
     }
     catch (error) {
-        res.status(500).json({ errorMessage: "Unable to connect to server, try again." })
+        res.status(500).json({ errorMessage: "Unable to connect to server, try again." });
     }
 
 });

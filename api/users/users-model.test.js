@@ -7,6 +7,7 @@ const Users = require("./users-model");
 const db = require("../../data/db-config");
 
 const andrew = { username: "andrew", password: "1234" };
+
 const newRecipe = {
     title: "testing",
     category: "dinner",
@@ -31,19 +32,22 @@ afterAll(async (done) => {
 });
 
 describe("users model", () => {
+
     let recipeRespone = {
         title: "testing",
         category_name: "dinner",
         source_name: "mom",
         ingredients: "love",
         instructions: "cook"
-    }
+    };
+
     it("can get all users", async () => {
         let res;
         await db("users").insert(andrew);
         res = await Users.getAll();
         expect(res).toHaveLength(1);
     });
+
     it("can get user by id", async () => {
         let userById;
         await db("users").insert(andrew);
@@ -51,6 +55,7 @@ describe("users model", () => {
         idU = await Users.getById(user[0].id)
         expect(idU).toMatchObject({ id: 1, username: "andrew" })
     });
+
     it("can create a user recipe", async () => {
         let res;
         await db("users").insert(andrew);
@@ -58,6 +63,7 @@ describe("users model", () => {
         res = await Users.getUserRecipes(1)
         expect(res).toMatchObject({ id: 1, username: "andrew", ...recipeRespone })
     });
+
     it("can get user's recipes by user id", async () => {
         let res;
         await db("users").insert(andrew);
@@ -65,6 +71,7 @@ describe("users model", () => {
         res = await Users.getUserRecipes(1);
         expect(res).toMatchObject({ id: 1, username: "andrew", ...recipeRespone })
     });
+
 });
 
 

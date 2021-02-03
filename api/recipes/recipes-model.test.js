@@ -3,7 +3,9 @@ const Users = require("../users/users-model");
 const db = require("../../data/db-config");
 
 const andrew = { username: "andrew", password: "1234" };
+
 const christina = { username: "christina", password: "1234" };
+
 const newRecipe = {
     title: "testing",
     category: "dinner",
@@ -11,6 +13,7 @@ const newRecipe = {
     ingredients: "love",
     instructions: "cook"
 };
+
 const newRecipe2 = {
     title: "test",
     category: "snacks",
@@ -18,6 +21,7 @@ const newRecipe2 = {
     ingredients: "lots",
     instructions: "cook it"
 };
+
 const editRecipe = {
     title: "testing 123",
     category: "dinner",
@@ -81,4 +85,3 @@ describe("recipes-model", () => {
         expect(res).toMatchObject({ id: 2, username: "andrew", ...newRecipeResponse })
     });
 });
-
