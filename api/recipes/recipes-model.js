@@ -1,8 +1,12 @@
 const db = require("../../data/db-config");
 
 module.exports = {
-    getAll() {
-        return db("recipes");
+    async getAll() {
+        return db("recipes as r").returning("*")
+            .join("sources as s", "r.source_id", "s.id")
+            .join("categories as c", "r.category_id", "c.id")
+            .join("ingredients as i", "r.ingredients_id", "i.id")
+            .select("r.id", "r.title", "c.category_name", "s.source_name", "i.ingredients", "r.instructions");
     },
     async getById(id) {
         return db.raw(`
