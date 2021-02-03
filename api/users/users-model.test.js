@@ -21,7 +21,8 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-    await db('users').truncate();
+    await db("users").truncate();
+    await db("recipes").truncate();
 });
 
 afterAll(async (done) => {
@@ -30,17 +31,18 @@ afterAll(async (done) => {
 });
 
 describe("users model", () => {
+    let recipeRespone = {
+        title: "testing",
+        category_name: "dinner",
+        source_name: "mom",
+        ingredients: "love",
+        instructions: "cook"
+    }
     it("can get all users", async () => {
         let res;
         await db("users").insert(andrew);
         res = await Users.getAll();
         expect(res).toHaveLength(1);
-    });
-    it("can create a user", async () => {
-        let user;
-        await Users.insert(andrew);
-        user = await db("users");
-        expect(user).toHaveLength(1);
     });
     it("can get user by id", async () => {
         let userById;
@@ -50,19 +52,18 @@ describe("users model", () => {
         expect(idU).toMatchObject({ id: 1, username: "andrew" })
     });
     it("can create a user recipe", async () => {
-        let recipe;
         let res;
-        let user = await db("users").insert(andrew);
-        recipe = await Users.createUserRecipe(newRecipe, 1);
+        await db("users").insert(andrew);
+        await Users.createUserRecipe(newRecipe, 1);
         res = await Users.getUserRecipes(1)
-        expect(res).toHaveLength(1);
+        expect(res).toMatchObject({ id: 1, username: "andrew", ...recipeRespone })
     });
     it("can get user's recipes by user id", async () => {
         let res;
         await db("users").insert(andrew);
         await Users.createUserRecipe(newRecipe, 1);
         res = await Users.getUserRecipes(1);
-        expect(res).toHaveLength(1)
+        expect(res).toMatchObject({ id: 1, username: "andrew", ...recipeRespone })
     });
 });
 

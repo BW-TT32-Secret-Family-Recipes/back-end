@@ -26,7 +26,7 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-router.get("/:id/recipes", async (req, res) => {
+router.get("/:id/recipes", security, validateUserId, async (req, res) => {
     try {
         const { id } = req.params;
         const recipes = await Users.getUserRecipes(id);
