@@ -31,6 +31,7 @@ afterAll(async (done) => {
 });
 
 describe("recipes router", () => {
+
     it("cannot get all recipes if not logged in", async () => {
         let res;
         await db("users").insert(olaf)
@@ -38,6 +39,7 @@ describe("recipes router", () => {
         res = await request(server).get("/api/users/1/recipes")
         expect(res.status).toBe(500)
     });
+
     it("can get recipe by recipe id", async () => {
         let res;
         let login;
@@ -47,4 +49,5 @@ describe("recipes router", () => {
         recipe = await request(server).post("/api/users/1/recipes").send(recipe);
         res = await request(server).get("/api/users/1/recipes/1").set("authorization", login.body.token);
     });
+
 });

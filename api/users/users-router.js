@@ -30,7 +30,7 @@ router.get("/:id/recipes", security, validateUserId, async (req, res) => {
     try {
         const { id } = req.params;
         const recipes = await Users.getUserRecipes(id);
-        res.status(200).json(recipes.rows);
+        res.status(200).json(recipes);
     }
     catch (error) {
         res.status(500).json({ message: error.message });
@@ -42,9 +42,7 @@ router.post("/:id/recipes", validateUserId, async (req, res) => {
         const addedRecipe = req.body;
         const { id } = req.params;
         const newRecipe = await Users.createUserRecipe(addedRecipe, id)
-        // console.log({ addedRecipe, newRecipe, id })
         const RecipeResponseObject = await Recipes.getById(newRecipe)
-        // console.log({ RecipeResponseObject })
         res.status(201).json(RecipeResponseObject[0]);
     }
     catch (error) {
