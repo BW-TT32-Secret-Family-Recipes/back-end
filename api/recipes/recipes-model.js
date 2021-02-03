@@ -21,7 +21,6 @@ module.exports = {
         join ingredients as i
         	on r.ingredients_id =  i.id
         where r.id = ${id}`)
-
     },
     remove(id) {
         return db("recipes").where("id", id).del()
