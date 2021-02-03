@@ -1,8 +1,12 @@
 const db = require("../../data/db-config");
 
 module.exports = {
-    getAll() {
-        return db("recipes");
+    async getAll() {
+        return db("recipes as r").returning("*")
+            .join("sources as s", "r.source_id", "s.id")
+            .join("categories as c", "r.category_id", "c.id")
+            .join("ingredients as i", "r.ingredients_id", "i.id")
+            .select("r.id", "r.title", "c.category_name", "s.source_name", "i.ingredients", "r.instructions");
     },
     async getById(id) {
         return db.raw(`
@@ -17,7 +21,6 @@ module.exports = {
         join ingredients as i
         	on r.ingredients_id =  i.id
         where r.id = ${id}`)
-
     },
     remove(id) {
         return db("recipes").where("id", id).del()
@@ -39,19 +42,3 @@ module.exports = {
         return recipes
     }
 };
-
-
-//back-up query for update() if all things BREAK!
-// const r = await db.raw(`
-//     select r.id, u.username, r.title, c.category_name,  s.source_name, i.ingredients, r.instructions 
-//         from recipes as r
-//             join users as u 
-//                 on r.user_id = u.id
-//             join sources as s
-//                 on r.source_id = s.id
-//             join categories as c
-//                 on r.category_id = c.id
-//             join ingredients as i
-//                 on r.ingredients_id =  i.id
-//                 where r.id = ${recipeId}`)
-// return r.rows[0];

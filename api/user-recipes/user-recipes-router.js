@@ -4,11 +4,6 @@ const Recipes = require("../recipes/recipes-model");
 const { validateRecipeId, validateUserId } = require("../middleware/index")
 
 router.delete("/:id", validateRecipeId, async (req, res) => {
-    // console.log(req, "REQ")
-    // const userId = req.baseUrl.split("/")
-    // req.userId = Number(userId[3])
-    // validateUserId(req.userId);
-    // // console.log("userId", req.userId)
     try {
         const { id } = req.params
         const deletedRecipe = await Recipes.remove(id);
