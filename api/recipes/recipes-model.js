@@ -43,19 +43,3 @@ module.exports = {
         return recipes
     }
 };
-
-
-//back-up query for update() if all things BREAK!
-// const r = await db.raw(`
-//     select r.id, u.username, r.title, c.category_name,  s.source_name, i.ingredients, r.instructions 
-//         from recipes as r
-//             join users as u 
-//                 on r.user_id = u.id
-//             join sources as s
-//                 on r.source_id = s.id
-//             join categories as c
-//                 on r.category_id = c.id
-//             join ingredients as i
-//                 on r.ingredients_id =  i.id
-//                 where r.id = ${recipeId}`)
-// return r.rows[0];
