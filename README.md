@@ -3,15 +3,16 @@
 ## Introduction
 Build week project for TT-32 at Lambda School.
 
-Creates an api using `Node.js` and `Express`. Tests done via `Jest` and `Supertest`. Implements authentication workflow (register/login/restrict endpoint) using `JSON Web Tokens` and `SQLite` in addition to the dependencies mentioned.
+Creates an api using `Node.js` and `Express`. 
+Tests done via `Jest` and `Supertest`. 
+This app implements authentication workflow (register/login/restrict endpoints) using `JSON Web Tokens`.
+Database created with `postgreSQL` and `SQLite`.
 
 ### Prerequisites
 - A REST client like [Postman](https://www.getpostman.com/downloads/) installed
 
+## Documentation
+- Done with Postman, access [it here](https://documenter.getpostman.com/view/13291547/TW6xooSK)
 
-### Server Setup
-- `npm install`
-- `npm run server` to start server.
-
-### To test
+### To test endpoints
 - `npm test`
