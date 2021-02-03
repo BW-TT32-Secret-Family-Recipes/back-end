@@ -26,11 +26,11 @@ router.put("/:id", validateRecipeId, async (req, res) => {
 
 })
 
-router.get("/:id", validateRecipeId, async (req, res) => {
+router.get("/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const recipe = await Recipes.getById(id)
-        res.status(200).json(recipe.rows[0]);
+        res.status(200).json(recipe);
     } catch (error) {
         res.status(500).json({ errorMessage: "Unable to retrieve recipe." })
     }

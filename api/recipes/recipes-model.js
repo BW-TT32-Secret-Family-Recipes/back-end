@@ -16,6 +16,7 @@ module.exports = {
             .join("ingredients as i", "r.ingredients_id", "i.id")
             .select("u.username", "r.title", "c.category_name", "s.source_name", "i.ingredients", "r.instructions")
             .where("r.id", id).first();
+        return r
     },
     remove(id) {
         return db("recipes").where("id", id).del()
