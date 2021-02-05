@@ -2,17 +2,17 @@
 
 ## Introduction
 Build week project for TT-32 at Lambda School.
+Secret Family Recipes is an app that allows a user to create, edit, and delete recipes all in one space.
 
-Creates an api using `Node.js` and `Express`. 
+This repository creates a server using `Node.js` and `Express`, its database created with `postgreSQL` and `SQLite`.
+This repository implements authentication workflow (register/login/restrict endpoints) using `JSON Web Tokens`.
 Tests done via `Jest` and `Supertest`. 
-This respository implements authentication workflow (register/login/restrict endpoints) using `JSON Web Tokens`.
-Database created with `postgreSQL` and `SQLite`.
 
 ### Prerequisites
 - A REST client like [Postman](https://www.getpostman.com/downloads/) installed
 
 ### Documentation
-- Created with Postman, access it [here](https://documenter.getpostman.com/view/13291547/TW6xooSK)
+- All enpoint documentation available [here](https://documenter.getpostman.com/view/13291547/TW6xooSK), created with Postman
 
 ### To test endpoints
 - `npm test`
