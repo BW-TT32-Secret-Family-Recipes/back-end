@@ -12,7 +12,7 @@ Tests done via `Jest` and `Supertest`.
 - A REST client like [Postman](https://www.getpostman.com/downloads/) installed
 
 ### Documentation
-- All enpoint documentation available [here](https://documenter.getpostman.com/view/13291547/TW6xooSK), created with Postman
+- All endpoint documentation available [here](https://documenter.getpostman.com/view/13291547/TW6xooSK), created with Postman
 
 ### To test endpoints
 - `npm test`
